@@ -22,9 +22,13 @@ export default (() => {
     const vendorChunkFilename = 'libs';
 
     let config = {
+        target: 'web',
         cache: true,
         output: {
             filename: '[name].js'
+        },
+        resolve: {
+          extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
         },
         module: {
             preLoaders: [{
@@ -36,9 +40,15 @@ export default (() => {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
                 loader: 'babel?presets[]=es2015'
+            },
+            {
+                test: /\.tsx?$/,
+                exclude: /(node_modules)/,
+                loader: 'ts-loader'
             }]
         },
-        plugins: []
+        plugins: [],
+        devtool: 'inline-source-map'
     };
 
     if (process.env.GULP_UGLIFY === 'true') {
@@ -52,12 +62,12 @@ export default (() => {
     // Development extras
     if (process.env.GULP_WEBPACK_DEV === 'true') {
         config.debug = true;
-        config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
-            name: `${vendorChunkFilename}`,
-            minChunks: function (module, count) {
-                return module.resource && module.resource.indexOf(path.resolve(sharedPaths.srcDir)) === -1;
-            }
-        }));
+        // config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+        //     name: `${vendorChunkFilename}`,
+        //     minChunks: function (module, count) {
+        //         return module.resource && module.resource.indexOf(path.resolve(sharedPaths.srcDir)) === -1;
+        //     }
+        // }));
         config.plugins.push(new webpack.SourceMapDevToolPlugin({
             exclude: `${vendorChunkFilename}.js`
         }));

@@ -9,7 +9,7 @@
  *********************************************************************************/
 
 import packagejson from '../../package.json';
-
+import tsconfig    from '../../tsconfig.json';
 
 /*********************************************************************************
  2. EXPORTS
@@ -22,6 +22,10 @@ module.exports = function () {
     const iconsFolderName = 'icons';
     const iconsSrcFiles = `${srcDir}/images/${iconsFolderName}/*.svg`;
     const scriptsMainFile = '*.ts';
+    const alias = tsconfig.compilerOptions.paths;
+
+    console.log('alias');
+    console.log(alias);
 
     return {
         srcDir,

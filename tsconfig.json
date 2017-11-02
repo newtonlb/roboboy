@@ -2,8 +2,16 @@
   "compilerOptions": {
     "sourceMap": true,
     "allowJs": true,
-    "target": "ES5",
+    "target": "es2015",
   	"module": "commonjs",
-    "allowSyntheticDefaultImports": true
-  }
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src/js",
+    "traceResolution": true,
+    "paths":{
+      "@sistema/*": ["sistema/*"]
+    }
+  },
+  "exclude": [
+    "src/js/sistema/registros"
+  ]
 }

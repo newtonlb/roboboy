@@ -20,7 +20,6 @@ import webpack     from 'webpack';
 export default (() => {
 
     const vendorChunkFilename = 'libs';
-
     let config = {
         target: 'web',
         cache: true,
@@ -28,7 +27,11 @@ export default (() => {
             filename: '[name].js'
         },
         resolve: {
-          extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+          extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+          alias: {
+              '@common' : path.resolve(process.cwd(), sharedPaths.scriptsSrcDir, 'sistema/common'),
+              '@sistema' : path.resolve(process.cwd(), sharedPaths.scriptsSrcDir, 'sistema')
+          }
         },
         module: {
             preLoaders: [{
@@ -72,6 +75,7 @@ export default (() => {
             exclude: `${vendorChunkFilename}.js`
         }));
     }
+    console.log(config.resolve.alias);
 
     return config;
 

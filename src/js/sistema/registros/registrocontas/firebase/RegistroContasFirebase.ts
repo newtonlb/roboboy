@@ -1,25 +1,18 @@
 declare var fb;
 
 import {iRegistroContas} from '..';
-import {Usuario} from '@sistema/common';
+import {Usuario, Endereco} from '@sistema/common';
 /**
  * implementa interacao com o firebase
  */
+
 export class RegistroContasFirebase implements iRegistroContas{
 
   create(usuario:Usuario):Promise<Usuario>{
     return new Promise<Usuario>((resolve, reject) => {
-
-      db.set({
-        nome: usuario.nome,
-        endereco: usuario.endereco
-      })
-
+      // simulando dados vindos do banco de dados
+      let usuario = getUserFromFirebaseSimulado();
       resolve(usuario);
-
-      if(deumerda)
-        reject(new Error('deu merda'));
-      
     })
   }
   update(usuario:Usuario):Promise<Usuario>{
@@ -33,6 +26,38 @@ export class RegistroContasFirebase implements iRegistroContas{
   }
 
   exists(usuario:string, senha:string):Promise<Usuario>{
+    return new Promise<Usuario>((resolve, reject) => {
+      //simulando dados vindos do banco de dados
+      // as vezes usuario existe, outras vezes não
+
+      if(Math.floor(Math.random() * 17) % 2 == 0)
+
+        resolve(getUserFromFirebaseSimulado());
+
+      else
+        reject(getErrorSenhaFromFirebaseSimulado());
+
+    })
 
   }
+}
+function getErrorSenhaFromFirebaseSimulado(){
+  return new Error('Senha Incorreta');
+}
+function getUserFromFirebaseSimulado(){
+  // simulando dados vindos do banco de dados
+  let endereco:Endereco = new Endereco()
+      endereco.rua = 'Barão de Santo Ângelo';
+      endereco.numero = '55';
+
+  let nome:string    = 'Pedro Torchio';
+  let login:string = 'princesafrozen'
+
+  let usuario = new Usuario();
+      usuario.id = `${Math.floor(Math.random() * 999999)}`;
+      usuario.nome = nome;
+      usuario.endereco = endereco;
+      usuario.login = login;
+
+  return usuario;
 }

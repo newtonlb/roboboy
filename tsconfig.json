@@ -12,6 +12,6 @@
     }
   },
   "exclude": [
-    "src/js/sistema/registros"
+    
   ]
 }

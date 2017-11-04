@@ -10,7 +10,6 @@
 
 import * as $ from 'jquery';
 import {iControleDeAcesso, UsuarioSenha} from '@sistema/controledeacesso';
-// talvez o teu editor indique erro aqui, mas @common = './sistema/common/index.ts'
 import {Sessao} from '@sistema/common';
 
 class Login{
